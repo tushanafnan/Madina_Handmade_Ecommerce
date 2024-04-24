@@ -50,8 +50,8 @@ const AppRouter = () => (
           path={ROUTES.CHECKOUT_STEP_1}
         />
         <ClientRoute
-          component={view.CheckOutStep3}
-          path={ROUTES.CHECKOUT_STEP_3}
+          component={view.CheckOutStep2}
+          path={ROUTES.CHECKOUT_STEP_2}
         />
         <ClientRoute
           component={view.CheckOutStep3}
