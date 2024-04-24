@@ -14,7 +14,7 @@ import {
 import { ArrowRightOutlined } from "@ant-design/icons";
 import React from "react";
 import { Link } from "react-router-dom";
-import bannerImg from "../../1000_F_237644131_RUIhbzVr87LNLI0aDIjKOJlvZTRjmvn3.jpg";
+import bannerImg from "../../Kasbah_Bab_Ourika_1200x.webp";
 
 const Home = () => {
   useDocumentTitle("Madina's Handmade | Home");

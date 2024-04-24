@@ -5,7 +5,7 @@ import { FilterOutlined, ShoppingOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import logo from "../../Weixin Image_20240422115311.jpg";
+import logo from "../../file.png";
 import BasketToggle from "../basket/BasketToggle";
 import Badge from "./Badge";
 import FiltersToggle from "./FiltersToggle";
