@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DB_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MSG_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyA75qlTC7lBvvNMypjHx41_g5-12oTedWw",
+  authDomain: "simo-175f6.firebaseapp.com",
+  databaseURL: "https://simo-175f6-default-rtdb.firebaseio.com",
+  projectId: "simo-175f6",
+  storageBucket: "simo-175f6.appspot.com",
+  messagingSenderId: "976957533592",
+  appId: "1:976957533592:web:313937a2395496ced68fed",
 };
 
 export default firebaseConfig;
