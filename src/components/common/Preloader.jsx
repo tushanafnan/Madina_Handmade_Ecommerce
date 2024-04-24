@@ -1,5 +1,5 @@
 import React from "react";
-import logoWordmark from "../../Weixin Image_20240422115311.jpg";
+import logoWordmark from "../../file.png";
 
 const Preloader = () => (
   <div className='preloader'>
