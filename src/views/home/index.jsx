@@ -14,7 +14,7 @@ import {
 import { ArrowRightOutlined } from "@ant-design/icons";
 import React from "react";
 import { Link } from "react-router-dom";
-import bannerImg from "../../Kasbah_Bab_Ourika_1200x.webp";
+import VideoPlayer from "../../components/VideoPlayer"; // Adjust the import path if necessary
 
 const Home = () => {
   useDocumentTitle("Madina's Handmade | Home");
@@ -56,7 +56,7 @@ const Home = () => {
             </Link>
           </div>
           <div className='banner-img'>
-            <img src={bannerImg} alt='' />
+            <VideoPlayer />
           </div>
         </div>
         <div className='display'>
