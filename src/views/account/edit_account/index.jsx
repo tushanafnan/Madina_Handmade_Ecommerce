@@ -23,7 +23,7 @@ const FormSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
     .required("Email is required."),
-  address: Yup.string(),
+  address: Yup.string(),02
   mobile: Yup.object().shape({
     country: Yup.string(),
     countryCode: Yup.string(),
