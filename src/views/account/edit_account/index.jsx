@@ -18,12 +18,12 @@ import EditForm from "./EditForm";
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
     .min(4, "Full name should be at least 4 characters.")
-    .max(60, "Full name should be only be 4 characters long.")
+    .max(60, "Full name should be only be 60 characters long.")
     .required("Full name is required"),
   email: Yup.string()
     .email("Email is not valid.")
     .required("Email is required."),
-  address: Yup.string(),02
+  address: Yup.string(), // The typo was here
   mobile: Yup.object().shape({
     country: Yup.string(),
     countryCode: Yup.string(),
@@ -43,7 +43,7 @@ const EditProfile = () => {
     () => () => {
       dispatch(setLoading(false));
     },
-    []
+    [dispatch]
   );
 
   const { profile, auth, isLoading } = useSelector((state) => ({
