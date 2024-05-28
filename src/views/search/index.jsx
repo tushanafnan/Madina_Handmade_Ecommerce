@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { LoadingOutlined } from '@ant-design/icons';
-import { Boundary, MessageDisplay } from '@/components/common';
-import { ProductGrid } from '@/components/product';
-import { useDidMount } from '@/hooks';
-import PropType from 'prop-types';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setRequestStatus } from '@/redux/actions/miscActions';
-import { searchProduct } from '@/redux/actions/productActions';
+import { Boundary, MessageDisplay } from "@/components/common";
+import { ProductGrid } from "@/components/product";
+import { useDidMount } from "@/hooks";
+import { setRequestStatus } from "@/redux/actions/miscActions";
+import { searchProduct } from "@/redux/actions/productActions";
+import { LoadingOutlined } from "@ant-design/icons";
+import PropType from "prop-types";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Search = ({ match }) => {
   const { searchKey } = match.params;
@@ -17,25 +17,34 @@ const Search = ({ match }) => {
     isLoading: state.app.loading,
     products: state.products.searchedProducts.items,
     basket: state.basket,
-    requestStatus: state.app.requestStatus
+    requestStatus: state.app.requestStatus,
   }));
 
   useEffect(() => {
     if (didMount && !store.isLoading) {
+      console.log(`Searching for: ${searchKey}`); // Debugging log
       dispatch(searchProduct(searchKey));
     }
   }, [searchKey]);
 
-  useEffect(() => () => {
-    dispatch(setRequestStatus(''));
+  useEffect(() => {
+    if (!store.isLoading) {
+      console.log("Search results:", store.products); // Debugging log
+    }
+  }, [store.products]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setRequestStatus(""));
+    };
   }, []);
 
   if (store.requestStatus && !store.isLoading) {
     return (
-      <main className="content">
+      <main className='content'>
         <MessageDisplay
           message={store.requestStatus}
-          desc="Try using correct filters or keyword."
+          desc='Try using correct filters or keyword.'
         />
       </main>
     );
@@ -44,13 +53,15 @@ const Search = ({ match }) => {
   if (!store.requestStatus && !store.isLoading) {
     return (
       <Boundary>
-        <main className="content">
-          <section className="product-list-wrapper product-list-search">
+        <main className='content'>
+          <section className='product-list-wrapper product-list-search'>
             {!store.requestStatus && (
-              <div className="product-list-header">
-                <div className="product-list-header-title">
+              <div className='product-list-header'>
+                <div className='product-list-header-title'>
                   <h5>
-                    {`Found ${store.products.length} ${store.products.length > 1 ? 'products' : 'product'} with keyword ${searchKey}`}
+                    {`Found ${store.products.length} ${
+                      store.products.length > 1 ? "products" : "product"
+                    } with keyword ${searchKey}`}
                   </h5>
                 </div>
               </div>
@@ -63,11 +74,11 @@ const Search = ({ match }) => {
   }
 
   return (
-    <main className="content">
-      <div className="loader">
+    <main className='content'>
+      <div className='loader'>
         <h4>Searching Product...</h4>
         <br />
-        <LoadingOutlined style={{ fontSize: '3rem' }} />
+        <LoadingOutlined style={{ fontSize: "3rem" }} />
       </div>
     </main>
   );
@@ -76,9 +87,9 @@ const Search = ({ match }) => {
 Search.propTypes = {
   match: PropType.shape({
     params: PropType.shape({
-      searchKey: PropType.string
-    })
-  }).isRequired
+      searchKey: PropType.string,
+    }),
+  }).isRequired,
 };
 
 export default Search;

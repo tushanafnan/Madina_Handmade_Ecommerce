@@ -100,7 +100,7 @@ class Firebase {
   setAuthPersistence = () =>
     this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
 
-  // // PRODUCT ACTIONS --------------
+  // PRODUCT ACTIONS --------------
 
   getSingleProduct = (id) => this.db.collection("products").doc(id).get();
 
@@ -177,18 +177,16 @@ class Firebase {
         try {
           const searchedNameRef = productsRef
             .orderBy("name_lower")
-            .where("name_lower", ">=", searchKey)
-            .where("name_lower", "<=", `${searchKey}\uf8ff`)
+            .where("name_lower", ">=", searchKey.toLowerCase())
+            .where("name_lower", "<=", `${searchKey.toLowerCase()}\uf8ff`)
             .limit(12);
           const searchedKeywordsRef = productsRef
             .orderBy("dateAdded", "desc")
             .where("keywords", "array-contains-any", searchKey.split(" "))
             .limit(12);
 
-          // const totalResult = await totalQueryRef.get();
           const nameSnaps = await searchedNameRef.get();
           const keywordsSnaps = await searchedKeywordsRef.get();
-          // const total = totalResult.docs.length;
 
           clearTimeout(timeout);
           if (!didTimeout) {
@@ -213,18 +211,16 @@ class Firebase {
             const mergedProducts = [
               ...searchedNameProducts,
               ...searchedKeywordsProducts,
-            ];
-            const hash = {};
+            ].filter(
+              (product, index, self) =>
+                index === self.findIndex((t) => t.id === product.id)
+            );
 
-            mergedProducts.forEach((product) => {
-              hash[product.id] = product;
-            });
-
-            resolve({ products: Object.values(hash), lastKey });
+            resolve({ products: mergedProducts, lastKey });
           }
         } catch (e) {
           if (didTimeout) return;
-          reject(e);
+          reject(e?.message || ":( Failed to fetch products.");
         }
       })();
     });
@@ -244,26 +240,27 @@ class Firebase {
       .limit(itemsCount)
       .get();
 
-  addProduct = (id, product) =>
-    this.db.collection("products").doc(id).set(product);
-
-  generateKey = () => this.db.collection("products").doc().id;
-
-  storeImage = async (id, folder, imageFile) => {
-    const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
-    const downloadURL = await snapshot.ref.getDownloadURL();
-
-    return downloadURL;
-  };
-
-  deleteImage = (id) => this.storage.ref("products").child(id).delete();
-
-  editProduct = (id, updates) =>
-    this.db.collection("products").doc(id).update(updates);
-
-  removeProduct = (id) => this.db.collection("products").doc(id).delete();
-}
-
-const firebaseInstance = new Firebase();
-
-export default firebaseInstance;
+      addProduct = (id, product) =>
+        this.db.collection("products").doc(id).set(product);
+    
+      generateKey = () => this.db.collection("products").doc().id;
+    
+      storeImage = async (id, folder, imageFile) => {
+        const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+    
+        return downloadURL;
+      };
+    
+      deleteImage = (id) => this.storage.ref("products").child(id).delete();
+    
+      editProduct = (id, updates) =>
+        this.db.collection("products").doc(id).update(updates);
+    
+      removeProduct = (id) => this.db.collection("products").doc(id).delete();
+    }
+    
+    const firebaseInstance = new Firebase();
+    
+    export default firebaseInstance;
+    
