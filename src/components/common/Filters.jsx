@@ -2,7 +2,7 @@
 import { useDidMount } from "@/hooks";
 import { applyFilter, resetFilter } from "@/redux/actions/filterActions";
 import { selectMax, selectMin } from "@/selectors/selector";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
@@ -45,6 +45,7 @@ const Filters = ({ closeModal }) => {
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
+    // Ensure that the brand value is correctly set in the filter state
     setFilter({ ...field, brand: val });
   };
 
@@ -80,27 +81,6 @@ const Filters = ({ closeModal }) => {
 
   return (
     <div className='filters'>
-      <div className='filters-field'>
-        <span>Brand</span>
-        <br />
-        <br />
-        {products.length === 0 && isLoading ? (
-          <h5 className='text-subtle'>Loading Filter</h5>
-        ) : (
-          <select
-            className='filters-brand'
-            value={field.brand}
-            disabled={isLoading || products.length === 0}
-            onChange={onBrandFilterChange}
-          >
-            <option value=''>All Brands</option>
-            <option value='salt'>LE VERRE BALDI</option>
-            <option value='betsin'>Non-Brand</option>
-            <option value='black'>CHABI CHIC</option>
-            <option value='sexbomb'>ARTISANS DU MAROC</option>
-          </select>
-        )}
-      </div>
       <div className='filters-field'>
         <span>Sort By</span>
         <br />
@@ -161,7 +141,7 @@ const Filters = ({ closeModal }) => {
 };
 
 Filters.propTypes = {
-  closeModal: PropType.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default withRouter(Filters);
